@@ -1,26 +1,367 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #05070a;
+  --background-secondary: #080c12;
+
+  --foreground: #f5f7fa;
+  --foreground-muted: #8c96a5;
+
+  --cyan: #57e6ff;
+  --cyan-soft: #1d9bb5;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --grid: rgba(87, 230, 255, 0.05);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--cyan);
+  color: #05070a;
+}
+.tech-grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(87, 230, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(87, 230, 255, 0.045) 1px, transparent 1px);
+
+  background-size: 56px 56px;
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.35) 65%,
+    transparent 100%
+  );
+
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.35) 65%,
+    transparent 100%
+  );
+
+  pointer-events: none;
+}
+.ambient-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ambient-light-primary {
+  background: radial-gradient(
+    circle at 76% 18%,
+    rgba(87, 230, 255, 0.13),
+    transparent 28%
+  );
+}
+
+.ambient-light-secondary {
+  background: radial-gradient(
+    circle at 12% 72%,
+    rgba(30, 105, 145, 0.08),
+    transparent 24%
+  );
+}
+
+.screen-vignette {
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at center,
+    transparent 30%,
+    rgba(0, 0, 0, 0.25) 65%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+
+  pointer-events: none;
+}
+.hud-corner {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.hud-corner::before,
+.hud-corner::after {
+  content: "";
+  position: absolute;
+  background: rgba(87, 230, 255, 0.65);
+}
+
+.hud-corner::before {
+  width: 100%;
+  height: 1px;
+}
+
+.hud-corner::after {
+  width: 1px;
+  height: 100%;
+}
+
+.hud-top-left {
+  top: 100px;
+  left: 34px;
+}
+
+.hud-top-left::before,
+.hud-top-left::after {
+  top: 0;
+  left: 0;
+}
+
+.hud-bottom-right {
+  right: 34px;
+  bottom: 100px;
+  transform: rotate(180deg);
+}
+
+.hud-bottom-right::before,
+.hud-bottom-right::after {
+  top: 0;
+  left: 0;
+}
+
+.hud-reticle {
+  position: absolute;
+  top: 48%;
+  left: 58%;
+  width: 88px;
+  height: 88px;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(87, 230, 255, 0.13);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hud-reticle::before,
+.hud-reticle::after {
+  content: "";
+  position: absolute;
+  background: rgba(87, 230, 255, 0.35);
+}
+
+.hud-reticle::before {
+  width: 120px;
+  height: 1px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hud-reticle::after {
+  width: 1px;
+  height: 120px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hud-reticle-center {
+  position: absolute;
+  inset: 50%;
+  width: 5px;
+  height: 5px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 18px rgba(87, 230, 255, 0.7);
+}
+
+.hud-index {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.hud-index::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: rgba(87, 230, 255, 0.45);
+}
+.holo-core {
+  position: absolute;
+  top: 49%;
+  left: 58%;
+  width: 270px;
+  height: 270px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.holo-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.holo-ring-outer {
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid rgba(87, 230, 255, 0.08);
+
+  box-shadow:
+    inset 0 0 40px rgba(87, 230, 255, 0.02),
+    0 0 40px rgba(87, 230, 255, 0.02);
+}
+
+.holo-ring-middle {
+  width: 68%;
+  height: 68%;
+
+  border: 1px solid rgba(87, 230, 255, 0.16);
+}
+
+.holo-ring-inner {
+  width: 34%;
+  height: 34%;
+
+  border: 1px solid rgba(87, 230, 255, 0.28);
+
+  box-shadow: 0 0 25px rgba(87, 230, 255, 0.05);
+}
+
+.holo-ring-outer::before,
+.holo-ring-middle::before {
+  content: "";
+
+  position: absolute;
+  inset: -1px;
+
+  border-radius: 50%;
+
+  border-top: 1px solid rgba(87, 230, 255, 0.65);
+
+  border-right: 1px solid transparent;
+
+  border-bottom: 1px solid transparent;
+
+  border-left: 1px solid transparent;
+}
+
+.holo-cross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  background: rgba(87, 230, 255, 0.16);
+
+  transform: translate(-50%, -50%);
+}
+
+.holo-cross-horizontal {
+  width: 118%;
+  height: 1px;
+}
+
+.holo-cross-vertical {
+  width: 1px;
+  height: 118%;
+}
+
+.holo-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 54px;
+  height: 54px;
+
+  transform: translate(-50%, -50%) rotate(45deg);
+
+  border: 1px solid rgba(87, 230, 255, 0.3);
+}
+
+.holo-center-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 8px;
+  height: 8px;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: var(--cyan);
+
+  box-shadow: 0 0 20px rgba(87, 230, 255, 0.85);
+}
+
+.holo-marker {
+  position: absolute;
+
+  width: 6px;
+  height: 6px;
+
+  border: 1px solid rgba(87, 230, 255, 0.65);
+
+  transform: rotate(45deg);
+}
+
+.holo-marker-1 {
+  top: 14%;
+  left: 23%;
+}
+
+.holo-marker-2 {
+  top: 70%;
+  right: 7%;
+}
+
+.holo-marker-3 {
+  bottom: 7%;
+  left: 32%;
+}
+
+.holo-data {
+  position: absolute;
+
+  font-size: 8px;
+  font-weight: 500;
+
+  letter-spacing: 0.32em;
+
+  color: rgba(255, 255, 255, 0.28);
+
+  white-space: nowrap;
+}
+
+.holo-data-top {
+  top: 7%;
+  right: -10%;
+}
+
+.holo-data-bottom {
+  bottom: 3%;
+  left: -8%;
 }
