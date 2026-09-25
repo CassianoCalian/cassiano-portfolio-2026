@@ -71,7 +71,9 @@ export default function Home() {
             </div>
           </header>
 
-          <div className="grid items-end gap-12 lg:grid-cols-[1fr_340px] lg:gap-20"></div>
+          <div className="hud-index">01 / Home Interface</div>
+
+          {/* CONTEÚDO PRINCIPAL */}
 
           {/* CONTEÚDO PRINCIPAL */}
           <div className="grid items-end gap-12 lg:grid-cols-[1fr_340px] lg:gap-20">
